@@ -1,2 +1,13 @@
-# proyecto-informatico-2
-Sistema de gestion inteligente para pequeñas empresas
+# SmartBiz
+
+Sistema de gestión inteligente para pequeñas empresas.
+
+---
+
+## Concepto del proyecto
+
+![Concepto SmartBiz](Docs/Public/concepto-smartbiz.png)
+
+## Flujo de ramas
+
+![Flujo de ramas](Docs/Public/flujo-ramas.png)
