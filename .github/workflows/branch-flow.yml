@@ -1,0 +1,45 @@
+name: Validate Branch Flow
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - frontend
+      - backend
+
+permissions:
+  contents: read
+
+jobs:
+  validate-branch-flow:
+    name: validate-branch-flow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate source and destination
+        env:
+          SOURCE: ${{ github.head_ref }}
+          TARGET: ${{ github.base_ref }}
+        run: |
+          echo "Source: $SOURCE"
+          echo "Target: $TARGET"
+
+          case "$TARGET" in
+            main)
+              [[ "$SOURCE" == "develop" ]] && exit 0
+              ;;
+            develop)
+              [[ "$SOURCE" == "frontend" ||
+                 "$SOURCE" == "backend" ]] && exit 0
+              ;;
+            frontend)
+              [[ "$SOURCE" == */frontend ]] && exit 0
+              ;;
+            backend)
+              [[ "$SOURCE" == */backend ]] && exit 0
+              ;;
+          esac
+
+          echo "::error::Merge not allowed: $SOURCE -> $TARGET"
+          exit 1
